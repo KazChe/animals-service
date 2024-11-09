@@ -15,12 +15,12 @@ public class Animal {
 
     private String imageUrl;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date saveedAt;
+    private Date savedAt;
 
     public Animal(AnimalType type, String imageUrl) {
         this.type = type;
         this.imageUrl = imageUrl;
-        this.saveedAt = new Date();
+        this.savedAt = new Date();
     }
 
     // Getters and Setters
@@ -42,11 +42,11 @@ public class Animal {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
-    public Date getSaveedAt() {
-        return saveedAt;
+    public Date getSavedAt() {
+        return savedAt;
     }
-    public void setSaveedAt(Date saveedAt) {
-        this.saveedAt = saveedAt;
+    public void setSavedAt(Date savedAt) {
+        this.savedAt = savedAt;
     }
 
 }
