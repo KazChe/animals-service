@@ -31,3 +31,15 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Temporary files
+/tmp/
+*.tmp
+
+# Additional common Java/Spring temporary files
+.settings/
+.classpath
+.project
+.factorypath
+.springBeans
+.sts4-cache/

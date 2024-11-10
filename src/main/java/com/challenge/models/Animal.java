@@ -30,8 +30,8 @@ public class Animal {
         this.imageUrl = imageUrl;
     }
     
-    // basic getters/setters below
-    // might need to add more validation later
+    // basic getter/setters below
+    // might haveto add more validation later
     public Long getId() {
         return id;
     }
