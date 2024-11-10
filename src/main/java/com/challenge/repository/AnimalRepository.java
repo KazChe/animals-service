@@ -5,8 +5,8 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.challenge.model.Animal;
-import com.challenge.model.AnimalType;
+import com.challenge.models.Animal;
+import com.challenge.models.AnimalType;
 
 // TODO: Add explanation
 

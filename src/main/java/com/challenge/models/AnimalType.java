@@ -1,4 +1,4 @@
-package com.challenge.model;
+package com.challenge.models;
 
 public enum AnimalType {
     BEAR,
