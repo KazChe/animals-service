@@ -16,16 +16,13 @@ public class ImageController {
     private ImageService imageService;
 
     @PostMapping("/save/{type}")
-    public ResponseEntity<List<String>> saveImages(
-            @PathVariable AnimalType type,
-            @RequestParam(defaultValue = "1") int count) {
+    public ResponseEntity<List<String>> saveImages(@PathVariable AnimalType type,@RequestParam(defaultValue = "1") int count) {
         List<String> imageUrls = imageService.saveImages(type, count)
                 .stream()
                 .map(Animal::getImageUrl)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(imageUrls);
     }
-
     @GetMapping("/latest/{type}")
     public ResponseEntity<String> getLatestImage(@PathVariable AnimalType type) {
         Animal animal = imageService.getLatestImage(type);

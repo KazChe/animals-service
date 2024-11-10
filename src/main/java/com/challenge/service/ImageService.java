@@ -34,6 +34,7 @@ public class ImageService {
 
     @Autowired
     private AnimalRepository animalRepository;
+
     // save to h2 database passing animal type and counts
     public List<Animal> saveImages(AnimalType type, int count) {
         List<Animal> savedAnimals = new ArrayList<>();
@@ -73,7 +74,8 @@ public class ImageService {
             return null;
         }
     }
-    // cat api trurns an array of joson e.g
+
+    // cat api trurns an array of josn e.g
     // [{"id":"abc","url":"https://cdn2.thecatapi.com/images/abc.jpg","width":768,"height":1024}]
     private String fetchCatImage() {
         try {
@@ -84,6 +86,7 @@ public class ImageService {
             return null;
         }
     }
+
     private String fetchBearImage() {
         try {
             int width = 300 + new Random().nextInt(301);
