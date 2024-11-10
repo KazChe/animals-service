@@ -5,6 +5,8 @@ import com.challenge.models.AnimalType;
 import com.challenge.repository.AnimalRepository;
 import com.challenge.dto.CatApiResponse;
 import com.challenge.dto.DogApiResponse;
+import com.challenge.exception.ImageNotFoundException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +34,10 @@ public class ImageService {
 
     @Autowired
     private AnimalRepository animalRepository;
-
+    // save to h2 database passing animal type and counts
     public List<Animal> saveImages(AnimalType type, int count) {
         List<Animal> savedAnimals = new ArrayList<>();
+        // using Setto prevent dups
         Set<String> usedUrls = new HashSet<>();
 
         for (int i = 0; i < count; i++) {
@@ -70,7 +73,8 @@ public class ImageService {
             return null;
         }
     }
-
+    // cat api trurns an array of joson e.g
+    // [{"id":"abc","url":"https://cdn2.thecatapi.com/images/abc.jpg","width":768,"height":1024}]
     private String fetchCatImage() {
         try {
             CatApiResponse[] response = restTemplate.getForObject(catApiUrl, CatApiResponse[].class);
@@ -80,7 +84,6 @@ public class ImageService {
             return null;
         }
     }
-
     private String fetchBearImage() {
         try {
             int width = 300 + new Random().nextInt(301);
@@ -94,7 +97,7 @@ public class ImageService {
 
     public Animal getLatestImage(AnimalType type) {
         return animalRepository.findFirstByTypeOrderBySavedAtDesc(type)
-                .orElseThrow(() -> new RuntimeException(
+                .orElseThrow(() -> new ImageNotFoundException(
                         "No images found for " + type + ". Please save an image first before trying to retrieve it."));
     }
 }
