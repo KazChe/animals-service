@@ -35,31 +35,45 @@ public class ImageService {
     @Autowired
     private AnimalRepository animalRepository;
 
-    // save to h2 database passing animal type and counts
+    // TODO: refactor this - getting too complex
     public List<Animal> saveImages(AnimalType type, int count) {
         List<Animal> savedAnimals = new ArrayList<>();
-        // using Setto prevent dups
+        // hacky way to prevent duplicates but works for now
         Set<String> usedUrls = new HashSet<>();
+        
+        // temp debug counter
+        int attempts = 0;
+        final int MAX_ATTEMPTS = 20; // in case API fails
 
         for (int i = 0; i < count; i++) {
-            String imageUrl = null;
+            String imgUrl = null;  // bad name but whatever
+            
+            // probably should use strategy pattern here...
             switch (type) {
                 case DOG:
-                    imageUrl = fetchDogImage();
+                    imgUrl = fetchDogImage();
                     break;
                 case CAT:
-                    imageUrl = fetchCatImage();
+                    imgUrl = fetchCatImage();
                     break;
                 case BEAR:
-                    imageUrl = fetchBearImage();
+                    // FIXME: sometimes returns broken images
+                    imgUrl = fetchBearImage();
                     break;
             }
 
-            if (imageUrl != null && !usedUrls.contains(imageUrl)) {
-                Animal animal = new Animal(type, imageUrl);
+            if (imgUrl != null && !usedUrls.contains(imgUrl)) {
+                Animal animal = new Animal(type, imgUrl);
                 savedAnimals.add(animalRepository.save(animal));
-                usedUrls.add(imageUrl);
-                logger.info("Saved {} image URL: {}", type, imageUrl);
+                usedUrls.add(imgUrl);
+                logger.debug("Saved {} image: {}", type, imgUrl);  // for debugging
+            } else {
+                i--; // try again if we got a duplicate
+                attempts++;
+                if (attempts > MAX_ATTEMPTS) {
+                    logger.warn("Too many failed attempts to fetch unique images");
+                    break;
+                }
             }
         }
         return savedAnimals;
@@ -100,7 +114,8 @@ public class ImageService {
 
     public Animal getLatestImage(AnimalType type) {
         return animalRepository.findFirstByTypeOrderBySavedAtDesc(type)
-                .orElseThrow(() -> new ImageNotFoundException(
-                        "No images found for " + type + ". Please save an image first before trying to retrieve it."));
+            .orElseThrow(() -> new ImageNotFoundException(
+                "No images found for type: " + type + ". Try saving some images first."
+            ));
     }
 }

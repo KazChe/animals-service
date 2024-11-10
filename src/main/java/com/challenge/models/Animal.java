@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "animals")
+@Table(name = "animals") // might need to rename this table later
 public class Animal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,25 +13,25 @@ public class Animal {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private AnimalType type;
-
+    // TODO: add validation for URL format
     @Column(nullable = false)
     private String imageUrl;
 
     @Column(nullable = false)
     private LocalDateTime savedAt;
 
-    // Constructors
     public Animal() {
         this.savedAt = LocalDateTime.now();
     }
-
+    // main constructor we actually use
     public Animal(AnimalType type, String imageUrl) {
         this();
         this.type = type;
         this.imageUrl = imageUrl;
     }
-
-    // Getters and setters
+    
+    // basic getters/setters below
+    // might need to add more validation later
     public Long getId() {
         return id;
     }
