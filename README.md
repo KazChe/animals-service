@@ -14,7 +14,7 @@ cd animal-service
 # Run with Docker
 docker compose up
 
-# Or run with Maven
+# Or run with Maven (requires JDK 19+)
 ./mvnw spring-boot:run
 ```
 
