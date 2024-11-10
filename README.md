@@ -20,29 +20,6 @@ docker compose up
 
 Access the application at http://localhost:8080
 
-## Design Choices & Trade-offs
-
-### Architecture
-
-- **Spring Boot Framework**: Chosen for rapid development, robust dependency injection, and extensive ecosystem
-- **H2 In-Memory Database**: Used for simplicity and portability, trade-off being data persistence
-- **Multi-stage Docker Build**: Optimizes image size and improves security
-- **RESTful API Design**: Simple CRUD operations for scalability
-- **Non-blocking UI**: Async JavaScript for better user experience
-
-### Security Considerations
-
-- Non-root user in Docker container
-- Environment-based configuration
-- Health checks implemented
-
-### Trade-offs
-
-- In-memory database vs. persistence
-- Spring Boot's larger footprint vs. development speed
-- Docker image size vs. development convenience
-- Simple error handling vs. complexity
-
 ## Features
 
 - Fetch and store images of cats, dogs, and bears
