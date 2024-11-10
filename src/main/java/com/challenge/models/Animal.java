@@ -1,25 +1,28 @@
 package com.challenge.models;
 
-import javax.persistence.*;
-import java.util.Date;
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "animals")
 public class Animal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private AnimalType type;
 
+    @Column(nullable = false)
     private String imageUrl;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date savedAt;
+    @Column(nullable = false)
+    private LocalDateTime savedAt;
 
     // Constructors
     public Animal() {
-        this.savedAt = new Date();
+        this.savedAt = LocalDateTime.now();
     }
 
     public Animal(AnimalType type, String imageUrl) {
@@ -53,11 +56,11 @@ public class Animal {
         this.imageUrl = imageUrl;
     }
 
-    public Date getSavedAt() {
+    public LocalDateTime getSavedAt() {
         return savedAt;
     }
 
-    public void setSavedAt(Date savedAt) {
+    public void setSavedAt(LocalDateTime savedAt) {
         this.savedAt = savedAt;
     }
 }
